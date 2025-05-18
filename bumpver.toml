@@ -1,0 +1,13 @@
+[bumpver]
+current_version = "1.0.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+tag_message = "{new_version}"
+tag_scope = "default"
+commit = true
+tag = true
+push = false
+
+[bumpver.file_patterns]
+"bumpver.toml" = ['current_version = "{version}"']
+"freshrss_to_karakeep.py" = ['VERSION: str = "{version}"']

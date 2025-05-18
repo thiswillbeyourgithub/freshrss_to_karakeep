@@ -1,0 +1,6 @@
+LICENSE
+log.txt
+.env*
+.aider*
+**pycache**
+**egg-info
