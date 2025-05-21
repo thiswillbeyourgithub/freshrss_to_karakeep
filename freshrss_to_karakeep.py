@@ -74,7 +74,12 @@ def get_karakeep_client() -> Optional[KarakeepAPI]:
     is_flag=True,
     help="Show detailed log messages in console output",
 )
-def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: bool, verbose: bool):
+@click.option(
+    "--mark-as-read/--no-mark-as-read",
+    default=True,
+    help="Whether to mark items as read in FreshRSS after transfer (default: True, only if unsaved)",
+)
+def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: bool, verbose: bool, mark_as_read: bool):
     # Configure console logging based on verbose flag
     console_level = "DEBUG" if verbose else "INFO"
     logger.add(sys.stderr, level=console_level)  # Console output
@@ -84,6 +89,7 @@ def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: b
     This script fetches saved items from FreshRSS, filters them based on regex patterns,
     adds them as bookmarks to Karakeep with the tag 'freshrss', and then optionally 
     unsaves them from FreshRSS after successful transfer (controlled by --unsave-freshrss flag).
+    If items are unsaved, they can also be marked as read (controlled by --mark-as-read flag).
     """
     logger.info("Starting FreshRSS to Karakeep transfer")
 
@@ -164,6 +170,12 @@ def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: b
                 resp = freshrss_client.set_mark(as_="unsaved", id=item.id)
                 logger.debug(f"Unsave response: {resp}")
                 logger.info(f"Successfully unsaved item from FreshRSS: {item.title}")
+
+                if mark_as_read:
+                    logger.info(f"Marking item as read in FreshRSS: {item.title}")
+                    read_resp = freshrss_client.set_mark(as_="read", id=item.id)
+                    logger.debug(f"Mark as read response: {read_resp}")
+                    logger.info(f"Successfully marked item as read in FreshRSS: {item.title}")
             else:
                 logger.info(f"Keeping item saved in FreshRSS: {item.title}")
 
