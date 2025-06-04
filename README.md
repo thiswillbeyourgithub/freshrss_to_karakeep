@@ -47,7 +47,7 @@ export FRESHRSS_PYTHON_API_PASSWORD="your_password"
 
 ### Karakeep Configuration
 ```bash
-export KARAKEEP_PYTHON_API_BASE_URL="https://your-karakeep-instance.com"
+export KARAKEEP_PYTHON_API_ENDPOINT="https://your-karakeep-instance.com/api/v1"
 export KARAKEEP_PYTHON_API_KEY="your_api_key"
 export KARAKEEP_PYTHON_API_VERBOSE="true"  # Optional
 export KARAKEEP_PYTHON_API_VERIFY_SSL="true"  # Optional, defaults to true
@@ -101,7 +101,7 @@ ExecStart=/usr/bin/python3 /path/to/freshrss_to_karakeep.py
 Environment="FRESHRSS_PYTHON_API_HOST=https://your-freshrss-instance.com"
 Environment="FRESHRSS_PYTHON_API_USERNAME=your_username"
 Environment="FRESHRSS_PYTHON_API_PASSWORD=your_password" 
-Environment="KARAKEEP_PYTHON_API_BASE_URL=https://your-karakeep-instance.com"
+Environment="KARAKEEP_PYTHON_API_ENDPOINT=https://your-karakeep-instance.com/api/v1/"
 Environment="KARAKEEP_PYTHON_API_KEY=your_api_key"
 # No environment variable for logging needed anymore
 WorkingDirectory=/path/to/directory
