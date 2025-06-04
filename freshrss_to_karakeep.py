@@ -20,36 +20,6 @@ logger.remove()  # Remove default handler
 logger.add("./log.txt", level="DEBUG", rotation="10 MB")  # File output always at DEBUG level
 
 
-def get_karakeep_client() -> Optional[KarakeepAPI]:
-    """
-    Initialize and return a Karakeep API client using environment variables.
-
-    Returns:
-        KarakeepAPI: Configured Karakeep client or None if credentials are missing
-    """
-    endpoint = os.environ.get("KARAKEEP_PYTHON_API_ENDPOINT")
-    api_key = os.environ.get("KARAKEEP_PYTHON_API_KEY")
-    verify_ssl_str = os.environ.get("KARAKEEP_PYTHON_API_VERIFY_SSL", "true")
-
-    if not endpoint or not api_key:
-        missing = []
-        if not endpoint:
-            missing.append("KARAKEEP_PYTHON_API_ENDPOINT")
-        if not api_key:
-            missing.append("KARAKEEP_PYTHON_API_KEY")
-        logger.error(f"Missing required environment variables: {', '.join(missing)}")
-        return None
-
-    verify_ssl = verify_ssl_str.lower() in ("true", "1", "yes")
-
-    return KarakeepAPI(
-        endpoint=endpoint,
-        api_key=api_key,
-        verify_ssl=verify_ssl,
-        verbose=True,
-    )
-
-
 @click.command()
 @click.option(
     "--needed-regex",
@@ -102,7 +72,8 @@ def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: b
     logger.info("Successfully connected to FreshRSS API")
 
     # Initialize Karakeep API client
-    karakeep_client = get_karakeep_client()
+    karakeep_client = KarakeepAPI()
+
     if not karakeep_client:
         logger.error("Failed to initialize Karakeep client. Exiting.")
         sys.exit(1)
