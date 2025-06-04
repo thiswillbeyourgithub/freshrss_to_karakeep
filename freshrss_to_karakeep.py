@@ -12,7 +12,7 @@ from loguru import logger
 from freshrss_api import FreshRSSAPI
 from karakeep_python_api import KarakeepAPI, datatypes, APIError, AuthenticationError
 
-VERSION: str = "1.0.1"
+VERSION: str = "1.1.0"
 
 
 # Configure logging
@@ -27,14 +27,14 @@ def get_karakeep_client() -> Optional[KarakeepAPI]:
     Returns:
         KarakeepAPI: Configured Karakeep client or None if credentials are missing
     """
-    base_url = os.environ.get("KARAKEEP_PYTHON_API_BASE_URL")
+    endpoint = os.environ.get("KARAKEEP_PYTHON_API_ENDPOINT")
     api_key = os.environ.get("KARAKEEP_PYTHON_API_KEY")
     verify_ssl_str = os.environ.get("KARAKEEP_PYTHON_API_VERIFY_SSL", "true")
 
-    if not base_url or not api_key:
+    if not endpoint or not api_key:
         missing = []
-        if not base_url:
-            missing.append("KARAKEEP_PYTHON_API_BASE_URL")
+        if not endpoint:
+            missing.append("KARAKEEP_PYTHON_API_ENDPOINT")
         if not api_key:
             missing.append("KARAKEEP_PYTHON_API_KEY")
         logger.error(f"Missing required environment variables: {', '.join(missing)}")
@@ -43,7 +43,7 @@ def get_karakeep_client() -> Optional[KarakeepAPI]:
     verify_ssl = verify_ssl_str.lower() in ("true", "1", "yes")
 
     return KarakeepAPI(
-        base_url=base_url,
+        endpoint=endpoint,
         api_key=api_key,
         verify_ssl=verify_ssl,
         verbose=True,
