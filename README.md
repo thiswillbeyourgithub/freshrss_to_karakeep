@@ -19,7 +19,7 @@ The intended workflow is simple:
 
 ## Dependencies
 
-This tool relies on two custom API clients:
+This tool relies on two custom API clients that I made:
 - [karakeep_python_api](https://github.com/thiswillbeyourgithub/karakeep_python_api/)
 - [freshrss_python_api](https://github.com/thiswillbeyourgithub/freshrss_python_api/)
 
