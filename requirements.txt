@@ -1,4 +1,4 @@
 click>=8.2.0
 loguru>=0.7.3
-freshrss-api>=2.0.2
+freshrss-api>=2.0.3
 karakeep-python-api>=1.2.4
