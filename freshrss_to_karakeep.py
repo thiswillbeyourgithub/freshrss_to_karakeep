@@ -135,6 +135,13 @@ def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: b
             else:
                 logger.warning(f"Failed to attach tag to bookmark {bookmark.id}")
 
+        # except (APIError, AuthenticationError) as e:
+        #     logger.error(f"Error processing item {item.url}: {e}")
+        except Exception as e:
+            logger.exception(f"Unexpected error processing item {item.url}: {e}")
+            raise
+
+        try:
             # Unsave item from FreshRSS if specified
             if unsave_freshrss:
                 logger.info(f"Unsaving item from FreshRSS: {item.title}")
@@ -149,11 +156,10 @@ def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: b
                     logger.info(f"Successfully marked item as read in FreshRSS: {item.title}")
             else:
                 logger.info(f"Keeping item saved in FreshRSS: {item.title}")
-
-        except (APIError, AuthenticationError) as e:
-            logger.error(f"Error processing item {item.url}: {e}")
         except Exception as e:
-            logger.exception(f"Unexpected error processing item {item.url}: {e}")
+            logger.error(f"Error unsaving or marking as read the item {item.url}: {e}")
+            raise
+
 
     logger.info("FreshRSS to Karakeep transfer completed")
 
