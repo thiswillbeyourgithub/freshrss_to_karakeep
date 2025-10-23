@@ -17,7 +17,9 @@ VERSION: str = "1.2.0"
 
 # Configure logging
 logger.remove()  # Remove default handler
-logger.add("./log.txt", level="DEBUG", rotation="10 MB")  # File output always at DEBUG level
+logger.add(
+    "./log.txt", level="DEBUG", rotation="10 MB"
+)  # File output always at DEBUG level
 
 
 @click.command()
@@ -49,7 +51,20 @@ logger.add("./log.txt", level="DEBUG", rotation="10 MB")  # File output always a
     default=True,
     help="Whether to mark items as read in FreshRSS after transfer (default: True, only if unsaved)",
 )
-def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: bool, verbose: bool, mark_as_read: bool):
+@click.option(
+    "--mark-as-favourite/--no-mark-as-favourite",
+    default=False,
+    help="Whether to mark bookmarks as favourited in Karakeep (default: False)",
+)
+def main(
+    needed_regex: str,
+    ignore_regex: str,
+    dry_run: bool,
+    unsave_freshrss: bool,
+    verbose: bool,
+    mark_as_read: bool,
+    mark_as_favourite: bool,
+):
     # Configure console logging based on verbose flag
     console_level = "DEBUG" if verbose else "INFO"
     logger.add(sys.stderr, level=console_level)  # Console output
@@ -109,9 +124,10 @@ def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: b
         try:
             # Create bookmark in Karakeep
             logger.info(f"Creating bookmark for: {item.title}")
-            bookmark = karakeep_client.create_a_new_bookmark(
-                type="link", url=item.url, title=item.title
-            )
+            bookmark_kwargs = {"type": "link", "url": item.url, "title": item.title}
+            if mark_as_favourite:
+                bookmark_kwargs["favourited"] = True
+            bookmark = karakeep_client.create_a_new_bookmark(**bookmark_kwargs)
 
             if not bookmark or not bookmark.id:
                 logger.error(f"Failed to create bookmark for {item.url}")
@@ -146,7 +162,9 @@ def main(needed_regex: str, ignore_regex: str, dry_run: bool, unsave_freshrss: b
                     logger.info(f"Marking item as read in FreshRSS: {item.title}")
                     read_resp = freshrss_client.set_mark(as_="read", id=item.id)
                     logger.debug(f"Mark as read response: {read_resp}")
-                    logger.info(f"Successfully marked item as read in FreshRSS: {item.title}")
+                    logger.info(
+                        f"Successfully marked item as read in FreshRSS: {item.title}"
+                    )
             else:
                 logger.info(f"Keeping item saved in FreshRSS: {item.title}")
 
