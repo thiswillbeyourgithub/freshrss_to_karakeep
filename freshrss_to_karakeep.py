@@ -56,6 +56,11 @@ logger.add(
     default=False,
     help="Whether to mark bookmarks as favourited in Karakeep (default: False)",
 )
+@click.option(
+    "--mark-as-archived/--no-mark-as-archived",
+    default=False,
+    help="Whether to mark bookmarks as archived in Karakeep (default: False)",
+)
 def main(
     needed_regex: str,
     ignore_regex: str,
@@ -64,6 +69,7 @@ def main(
     verbose: bool,
     mark_as_read: bool,
     mark_as_favourite: bool,
+    mark_as_archived: bool,
 ):
     # Configure console logging based on verbose flag
     console_level = "DEBUG" if verbose else "INFO"
@@ -127,6 +133,8 @@ def main(
             bookmark_kwargs = {"type": "link", "url": item.url, "title": item.title}
             if mark_as_favourite:
                 bookmark_kwargs["favourited"] = True
+            if mark_as_archived:
+                bookmark_kwargs["archived"] = True
             bookmark = karakeep_client.create_a_new_bookmark(**bookmark_kwargs)
 
             if not bookmark or not bookmark.id:
