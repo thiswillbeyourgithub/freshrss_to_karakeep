@@ -73,6 +73,15 @@ python freshrss_to_karakeep.py --dry-run
 
 # Keep items saved in FreshRSS after transfer
 python freshrss_to_karakeep.py --no-unsave-freshrss
+
+# Mark bookmarks as favourited in Karakeep
+python freshrss_to_karakeep.py --mark-as-favourite
+
+# Mark bookmarks as archived in Karakeep
+python freshrss_to_karakeep.py --mark-as-archived
+
+# Don't mark items as read in FreshRSS after unsaving
+python freshrss_to_karakeep.py --no-mark-as-read
 ```
 
 ### Command-line Arguments
@@ -83,6 +92,9 @@ python freshrss_to_karakeep.py --no-unsave-freshrss
 | `--ignore-regex` | Exclude items with URLs matching this regex | `""` (none) |
 | `--dry-run` | Don't actually transfer items, just show what would be transferred | `False` |
 | `--unsave-freshrss/--no-unsave-freshrss` | Whether to unsave items from FreshRSS after transfer | `True` |
+| `--mark-as-read/--no-mark-as-read` | Whether to mark items as read in FreshRSS after transfer (only if unsaved) | `True` |
+| `--mark-as-favourite/--no-mark-as-favourite` | Whether to mark bookmarks as favourited in Karakeep | `False` |
+| `--mark-as-archived/--no-mark-as-archived` | Whether to mark bookmarks as archived in Karakeep | `False` |
 | `--verbose` | Show detailed log messages in console output | `False` |
 
 ## Automation with systemd
