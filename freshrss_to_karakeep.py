@@ -185,7 +185,7 @@ def main(
             has_failures = True
 
     logger.info("FreshRSS to Karakeep transfer completed")
-    
+
     if has_failures:
         logger.error("Some items failed to process")
         sys.exit(1)
