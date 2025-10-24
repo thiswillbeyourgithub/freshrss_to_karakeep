@@ -126,6 +126,7 @@ def main(
         return
 
     # Process each filtered item
+    has_failures = False
     for item in filtered_items:
         try:
             # Create bookmark in Karakeep
@@ -178,10 +179,16 @@ def main(
 
         except (APIError, AuthenticationError) as e:
             logger.error(f"Error processing item {item.url}: {e}")
+            has_failures = True
         except Exception as e:
             logger.exception(f"Unexpected error processing item {item.url}: {e}")
+            has_failures = True
 
     logger.info("FreshRSS to Karakeep transfer completed")
+    
+    if has_failures:
+        logger.error("Some items failed to process")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
