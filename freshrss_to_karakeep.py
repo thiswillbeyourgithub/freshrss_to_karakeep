@@ -146,10 +146,9 @@ def main(
 
             # Add 'freshrss' tag to the bookmark
             logger.info(f"Adding 'freshrss' tag to bookmark {bookmark.id}")
-            tag_payload = {"tags": [{"tagName": "freshrss"}]}
 
             attach_response = karakeep_client.attach_tags_to_a_bookmark(
-                bookmark_id=bookmark.id, tags_data=tag_payload
+                bookmark_id=bookmark.id, tag_names=["freshrss"]
             )
 
             if "attached" in attach_response and len(attach_response["attached"]) > 0:
