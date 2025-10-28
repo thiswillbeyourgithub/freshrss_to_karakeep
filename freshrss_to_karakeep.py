@@ -2,15 +2,13 @@
 freshrss_to_karakeep.py - Transfer saved items from FreshRSS to Karakeep
 """
 
-import os
 import re
 import sys
-from typing import List, Optional
 
 import click
 from loguru import logger
 from freshrss_api import FreshRSSAPI
-from karakeep_python_api import KarakeepAPI, datatypes, APIError, AuthenticationError
+from karakeep_python_api import KarakeepAPI, APIError, AuthenticationError
 
 VERSION: str = "1.1.3"
 
