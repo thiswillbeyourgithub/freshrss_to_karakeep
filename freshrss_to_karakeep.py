@@ -14,7 +14,7 @@ VERSION: str = "1.1.4"
 
 
 # Configure logging
-logger.remove()  # Remove default handler
+# logger.remove()  # Remove default handler
 logger.add(
     "./log.txt", level="DEBUG", rotation="10 MB"
 )  # File output always at DEBUG level
