@@ -10,7 +10,7 @@ from loguru import logger
 from freshrss_api import FreshRSSAPI
 from karakeep_python_api import KarakeepAPI, APIError, AuthenticationError
 
-VERSION: str = "1.1.5"
+VERSION: str = "1.1.6"
 
 
 # Configure logging
