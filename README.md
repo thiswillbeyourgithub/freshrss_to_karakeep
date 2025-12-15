@@ -2,8 +2,6 @@
 
 A tool to transfer saved/favorited items from [FreshRSS](https://github.com/FreshRSS/FreshRSS) to [Karakeep](https://github.com/karakeep-app/karakeep).
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
 ## Overview
 
 FreshRSS to Karakeep simplifies the curation workflow between self-hosted FreshRSS (RSS reader) and Karakeep (bookmarking/read-it-later app). The tool automatically transfers items you've marked as "favorites" (saved) in FreshRSS to your Karakeep instance, applying the "freshrss" tag for easy identification.
@@ -141,9 +139,6 @@ sudo systemctl enable freshrss-to-karakeep.timer
 sudo systemctl start freshrss-to-karakeep.timer
 ```
 
-## License
-
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
 ---
 *This README was created with assistance from [aider.chat](https://github.com/Aider-AI/aider/)*
